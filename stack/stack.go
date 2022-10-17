@@ -2,6 +2,7 @@ package stack
 
 import (
 	"errors"
+	"math"
 	"sync"
 )
 
@@ -13,7 +14,11 @@ type stack[T any] struct {
 	values       []T
 }
 
-func NewStack[T any](capacity int, defaultValue T) *stack[T] {
+func New[T any](defaultValue T) *stack[T] {
+	return NewWithCapacity(math.MaxInt, defaultValue)
+}
+
+func NewWithCapacity[T any](capacity int, defaultValue T) *stack[T] {
 	return &stack[T]{
 		top:          -1,
 		defaultValue: defaultValue,
