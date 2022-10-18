@@ -2,7 +2,7 @@ package stack
 
 import (
 	"errors"
-	"math"
+	"fmt"
 	"sync"
 )
 
@@ -15,7 +15,7 @@ type stack[T any] struct {
 }
 
 func New[T any](defaultValue T) *stack[T] {
-	return NewWithCapacity(math.MaxInt, defaultValue)
+	return NewWithCapacity(10000, defaultValue)
 }
 
 func NewWithCapacity[T any](capacity int, defaultValue T) *stack[T] {
@@ -76,4 +76,14 @@ func (s *stack[T]) Peek() (T, error) {
 
 	val := s.values[s.top]
 	return val, nil
+}
+
+func (s *stack[T]) Print() {
+	s.RLock()
+	defer s.RUnlock()
+
+	for i := 0; i <= s.top; i++ {
+		fmt.Printf(" %v ||", s.values[i])
+	}
+	fmt.Println()
 }
